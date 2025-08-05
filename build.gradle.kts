@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id ("com.gradleup.shadow") version "8.3.0"
+    kotlin("jvm") version "2.2.0"
 }
 
 group = "dev.mikan"
@@ -31,30 +32,26 @@ repositories {
     mavenLocal()
     mavenCentral()
     flatDir {
-        dirs ("/home/mikan/.m2/repository/dev/mikan/AltairKit/1.8.8")
+        dirs ("/home/mikan/.m2/repository/dev/mikan/AltairKit/1.21.4")
     }
 
-    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
-
-    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
     maven {
-        name = "sonatype"
-        url = uri("https://oss.sonatype.org/content/groups/public/")
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
-    compileOnly ("org.projectlombok:lombok:1.18.36")
-    annotationProcessor ("org.projectlombok:lombok:1.18.36")
+    compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
 
-    // Packet events
-    compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
-    implementation("dev.mikan:AltairKit:1.8.8")
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly(kotlin("reflect"))
+
+    implementation("dev.mikan:AltairKit:1.21.4")
 }
 
 tasks.named("build"){
     dependsOn(tasks.named("shadowJar"))
-//    finalizedBy("copy")
+    finalizedBy("copy")
 
 }
